@@ -20,9 +20,7 @@ SL =   {'SKB': 1000000,
         'RIZ': 1000,
         'DDN': 1000}
 
-wallet = 0
-stockamount = 0
-ListSL = []
+wallet = 1000
 
 def randomprice():
     now = datetime.datetime.now()
@@ -35,7 +33,9 @@ def randomprice():
 def purchase():
     buyscreen = 0
     while buyscreen == 0:
-        a = input("Purchase stocks and amount:")
+        stockamount = 0
+        ListSL = []
+        a = input("Please enter desired stocks and amount to purchase:")
         words = a.split()
         
         if len(words) == 2:
@@ -72,11 +72,19 @@ def purchase():
         else:
             print("Request Invalid")
 
-
-input("Choose an action:\n")
-
-                
-
+while True:
+    print("Current Balance:" + str(wallet))
+    print("""Choose an action:
+1 . Purchase Shares
+2 . ---
+3 . ---""")
+    choice = input(':')
+    if choice in ['1', 'Purchase Shares', 'purchase shares', 'Purchase shares']:
+        purchase()
+    
+    else:
+        print("Request Invalid")
+ 
 
 
 
