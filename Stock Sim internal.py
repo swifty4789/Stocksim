@@ -2,18 +2,18 @@ import datetime
 import random
 import time
 
-SL =   {'SKB': 1000000,
-        'FRT': 1000000,
-        'AMG': 1000000,
-        'DFT': 1000000,
-        'MOG': 100000,
-        'MEW': 100000,
-        'LMX': 100000,
-        'OHO': 100000,
-        'EDG': 10000,
-        'GNG': 10000,
-        'GYT': 10000,
-        'SGA': 10000,
+SL =   {'SKB': 100,
+        'FRT': 100,
+        'AMG': 100,
+        'DFT': 100,
+        'MOG': 250,
+        'MEW': 250,
+        'LMX': 250,
+        'OHO': 250,
+        'EDG': 500,
+        'GNG': 500,
+        'GYT': 500,
+        'SGA': 500,
         'CNT': 1000,
         'LGR': 1000,
         'FNM': 1000,
@@ -36,7 +36,7 @@ def price():
 
     
 def purchase():
-    stockamount = 0
+    setprice = 0
     purchaseUI = 1
     while purchaseUI == 1:
         a = input("""Please enter desired stocks and amount to purchase (example: ABC 123)\n
@@ -44,7 +44,6 @@ Type 'x' to return to menu: """)
         if a in ['x']:
             #replace with list of stocks and buttons to choose each share option
             words = a.split()
-        
             #Check if input from player is valid and correct syntax
             if len(words) == 2:
                 requestint = (words[1])
@@ -55,15 +54,15 @@ Type 'x' to return to menu: """)
                     requeststr = str(words[0])
                         
                     if requeststr in SL:
-                        stockamount = SL[requeststr]
+                        print(list(SL.keys())[list(SL.values()).index(requeststr)])
+                        setprice = SL[requeststr]
                             
-                        if stockamount >= requestint:
+                        if setprice >= requestint:
                             confirm = input("Confirm purchase of "+ str(a))
                             #confirm purchase
 
                             if confirm in ['y','Y','Yes','yes','Confirm','confirm','c','C']:
-                               stockamount = stockamount - requestint
-                               SL[requeststr] = SL[requeststr] - requestint
+                               
                                time.sleep(1)
                                print('Purchase Successful')
                                time.sleep(1)
@@ -95,6 +94,7 @@ while True:
     choice = input(':')
     if choice in ['1', 'Purchase Shares', 'purchase shares', 'Purchase shares']:
         print(SL)
+        print('\n')
         purchase()
     
     else:
