@@ -24,7 +24,6 @@ SL =   {
 }
 
 
-
     
 def purchase():
     setprice = 0
@@ -78,39 +77,64 @@ Type 'x' to return to menu: """)
             else:
                 print("Request Invalid")
 
-def save(playerdict):
+def savegame(playerdict):
     outfile = open('playersave', 'w')
     json.dump(playerdict, outfile)
     outfile.close()
 
-def load():
+def loadgame():
+    global playerdict
     infile = open('playersave', 'r')
     result = json.load(infile)
     infile.close()
-    return result
+    playerdict = result
 
-
+def newgame():
+    global playerdict
     
-    
-
-
-#data saved to json file
-
-playerdict = {
-    "Name": 'playername',
-    "Wallet": 'playerwallet',
-    "Lasttimesaved": 'time',
-    "ownedshares":[]
+    playerdict= {
+        "Name": 'playername',
+        "Wallet": 200,
+        "Lasttimesaved": datetime.datetime.now(),
+        "ownedshares":[]
 }
+    ngroot = tkinter.Tk()
 
+    label = tkinter.Label(ngroot, text='Name: ')
+    label.pack()
+    txtbox = tkinter.Text(ngroot)
+    txtbox.pack()
 
-
-
-
+    ngroot.mainloop()
+    
 
 #code start
+import tkinter
+from tkinter import ttk
 
-playerdict = load() 
+root = tkinter.Tk()
+
+ttk.Style().configure("TButton", padding=6, relief='flat',
+                      background="#000")
+
+btn = ttk.Button(root, text="New", command=newgame)
+btn.pack()
+btn = ttk.Button(root, text="Load", command=loadgame)
+btn.pack()
+
+root.mainloop()
+
+
+
+
+
+
+
+    
+
+
+
+
 
 
 
