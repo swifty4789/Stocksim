@@ -105,7 +105,12 @@ def newgame():
     txtbox = tkinter.Text(ngroot)
     txtbox.pack()
 
+    ngroot.bind('<Return>', (lambda event: ngroot.destroy()))
+    
     ngroot.mainloop()
+
+
+    
     
 
 #code start
