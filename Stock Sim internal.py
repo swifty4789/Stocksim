@@ -91,11 +91,11 @@ def loadgame():
 
 def newgame():
     global playerdict
-    
+
     playerdict= {
         "Name": 'playername',
         "Wallet": 200,
-        "Lasttimesaved": datetime.datetime.now(),
+        "Lasttimesaved": str(datetime.datetime.now()),
         "ownedshares":[]
 }
     ngroot = tkinter.Tk()
@@ -105,10 +105,22 @@ def newgame():
     txtbox = tkinter.Text(ngroot)
     txtbox.pack()
 
-    ngroot.bind('<Return>', (lambda event: ngroot.destroy()))
-    
+    def getuser(event = None):
+        global playerdict
+        playerdict["Name"] = txtbox.get("1.0", "end").strip()
+        savegame(playerdict)
+        ngroot.destroy()
+        
+    ngroot.bind('<Return>', getuser)
+
+    btn = ttk.Button(ngroot, text="Save", command=getuser)
+    btn.pack()
+
     ngroot.mainloop()
 
+def gameloop():
+    mainroot = Tk()
+    mainroot.geometry("750x500")
 
     
     
@@ -116,10 +128,13 @@ def newgame():
 #code start
 import tkinter
 from tkinter import ttk
+from tkinter import *
 
 root = tkinter.Tk()
 
-ttk.Style().configure("TButton", padding=6, relief='flat',
+gameloop()
+
+ttk.Style().configure("TButton", padding=60, relief='flat',
                       background="#000")
 
 btn = ttk.Button(root, text="New", command=newgame)
@@ -127,15 +142,6 @@ btn.pack()
 btn = ttk.Button(root, text="Load", command=loadgame)
 btn.pack()
 
-root.mainloop()
-
-
-
-
-
-
-
-    
 
 
 
