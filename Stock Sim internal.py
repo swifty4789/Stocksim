@@ -76,7 +76,8 @@ Type 'x' to return to menu: """)
 
             else:
                 print("Request Invalid")
-
+##########################################################################
+                
 def savegame(playerdict):
     outfile = open('playersave', 'w')
     json.dump(playerdict, outfile)
@@ -99,7 +100,7 @@ def newgame():
         "ownedshares":[]
 }
     ngroot = tkinter.Tk()
-
+    ngroot.geometry("1000x800")
     label = tkinter.Label(ngroot, text='Name: ')
     label.pack()
     txtbox = tkinter.Text(ngroot)
@@ -117,11 +118,36 @@ def newgame():
     btn.pack()
 
     ngroot.mainloop()
+    
+###############################################################################
+
+def startup():
+    startroot = tkinter.Tk()
+    startroot.geometry("1000x800")
+    startroot.resizable(False, False)
+
+    def loadclose():
+        startroot.destroy()
+        loadgame()
+
+    def newclose():
+        startroot.destroy()
+        newgame()
+        
+    btn = Button(startroot, text = 'Load', height= 5, width=25, command = loadclose)
+    btn.place(x=360, y=250)
+
+    btn = Button(startroot, text = 'New', height= 5, width=25, command = newclose)
+    btn.place(x=360, y=370)
+
+    startroot.mainloop()
+    
 
 def gameloop():
     mainroot = Tk()
-    mainroot.geometry("750x500")
-
+    mainroot.geometry("1000x800")
+    mainroot.title("Stocksim")
+    
     
     
 
@@ -130,19 +156,7 @@ import tkinter
 from tkinter import ttk
 from tkinter import *
 
-root = tkinter.Tk()
-
-gameloop()
-
-ttk.Style().configure("TButton", padding=60, relief='flat',
-                      background="#000")
-
-btn = ttk.Button(root, text="New", command=newgame)
-btn.pack()
-btn = ttk.Button(root, text="Load", command=loadgame)
-btn.pack()
-
-
+startup()
 
 
 
