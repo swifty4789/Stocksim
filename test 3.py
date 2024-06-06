@@ -19,38 +19,36 @@ SL =   {
     'DDN': 1000
 }
 
-# Import module 
+
 from tkinter import *
-  
-# Create object 
-buyroot = Tk() 
-  
-# Adjust size 
-buyroot.geometry( "1000x800" ) 
-  
-# Change the label text 
-def show(): 
-    label.config( text = clicked.get() ) 
-  
-# Dropdown menu options 
-options = list(SL)
-  
-# datatype of menu text 
+
+   buyroot = tkinter.Tk()
+   buyroot.geometry("1000x800")
+   buyroot.title("Stocksim")
+   Label(buyroot, text="Purchase stuff", font=('Helvetica 17 bold')).pack(pady=20)
+
+def buy():# <---purchase function
+    global balance
+    stockcode = clicked.get()
+    price = SL.get(stockcode, 0)
+    balance = balance - price
+    
+    L.config(text = balance)
+    label.config(text = clicked.get())
+    
+options = list(SL) 
 clicked = StringVar() 
-  
-# initial menu text 
-clicked.set( "Select here" ) 
-  
-# Create Dropdown menu 
+clicked.set( "Select here" )
+
 drop = OptionMenu( buyroot , clicked , *options )
-drop.pack()
-  
-# Create button, it will change label text 
-button = Button( buyroot , text = "click Me" , command = show ).pack() 
-  
-# Create Label 
-label = Label( buyroot , text = " ", font=('Helvetica 17 bold')) 
-label.pack() 
-  
-# Execute tkinter 
+drop.place(x=50, y=100)
+
+button = Button(buyroot ,text = "PURCHASE" , command = buy).pack() 
+
+label = Label( buyroot ,text = " ", font=('Helvetica 17 bold')) 
+label.pack()
+
+L = Label(buyroot, text=balance, font=('Helvetica 17 bold'))
+L.pack()
+
 buyroot.mainloop() 

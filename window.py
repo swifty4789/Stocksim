@@ -31,12 +31,37 @@ def inventory():
    invroot.mainloop()
 
 
-def buy():
+def buyscreen():
    buyroot = tkinter.Tk()
    buyroot.geometry("1000x800")
    buyroot.title("Stocksim")
    Label(buyroot, text="Purchase stuff", font=('Helvetica 17 bold')).pack(pady=20)
-   Label(buyroot, text=pformat(SL), font=('Helvetica 17 bold')).pack(pady=50)
+
+   def buy():# <---purchase function
+       global balance
+       stockcode = clicked.get()
+       price = SL.get(stockcode, 0)
+       balance = balance - price
+       
+       L.config(text = balance)
+       label.config(text = clicked.get())
+       
+   options = list(SL) 
+   clicked = StringVar() 
+   clicked.set( "Select here" )
+
+   drop = OptionMenu( buyroot , clicked , *options )
+   drop.place(x=50, y=100)
+
+   button = Button(buyroot ,text = "PURCHASE" , command = buy).pack() 
+
+   label = Label( buyroot ,text = " ", font=('Helvetica 17 bold')) 
+   label.pack()
+
+   L = Label(buyroot, text=balance, font=('Helvetica 17 bold'))
+   L.pack()
+
+   buyroot.mainloop() 
 
 inventory()
 buy()
