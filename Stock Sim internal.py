@@ -89,13 +89,14 @@ def loadgame():
     result = json.load(infile)
     infile.close()
     playerdict = result
+    gameloop()
 
 def newgame():
     global playerdict
 
     playerdict= {
         "Name": 'playername',
-        "Wallet": 200,
+        "wallet": 200,
         "Lasttimesaved": str(datetime.datetime.now()),
         "ownedshares":[]
 }
@@ -111,6 +112,7 @@ def newgame():
         playerdict["Name"] = txtbox.get("1.0", "end").strip()
         savegame(playerdict)
         ngroot.destroy()
+        gameloop()
         
     ngroot.bind('<Return>', getuser)
 
@@ -118,6 +120,44 @@ def newgame():
     btn.pack()
 
     ngroot.mainloop()
+
+
+def buyscreen():
+    global playerdict
+    buyroot = tkinter.Tk()
+    buyroot.geometry("1000x800")
+    buyroot.title("Stocksim")
+    Label(buyroot, text="Purchase stuff", font=('Helvetica 17 bold')).pack(pady=20)
+
+    def buy():# <---purchase function
+        global playerdict
+        stockcode = clicked.get()
+        price = SL.get(stockcode, 0)
+        if playerdict["wallet"] >= price:
+            playerdict["wallet"] = playerdict["wallet"] - price
+            playerdict["ownedshares"].append(stockcode)
+            savegame(playerdict)
+        
+        L.config(text = str(playerdict["wallet"]))
+        label.config(text = clicked.get())
+        
+    options = list(SL) 
+    clicked = StringVar() 
+    clicked.set( "Select here" )
+
+    drop = OptionMenu( buyroot , clicked , *options )
+    drop.place(x=50, y=100)
+
+    button = Button(buyroot ,text = "PURCHASE" , command = buy).pack() 
+
+    label = Label( buyroot ,text = " ", font=('Helvetica 17 bold')) 
+    label.pack()
+
+    L = Label(buyroot, text=str(playerdict["wallet"]), font=('Helvetica 17 bold'))
+    L.pack()
+
+    buyroot.mainloop() 
+
     
 ###############################################################################
 
@@ -142,11 +182,15 @@ def startup():
 
     startroot.mainloop()
     
-
 def gameloop():
     mainroot = Tk()
     mainroot.geometry("1000x800")
     mainroot.title("Stocksim")
+    
+    buybtn = Button(mainroot, text  = 'Purchase Stocks', height=5, width=25, command = buyscreen)
+    buybtn.place(x=360, y=250)
+
+    mainroot.mainloop()
     
     
     
@@ -155,6 +199,7 @@ def gameloop():
 import tkinter
 from tkinter import ttk
 from tkinter import *
+
 
 startup()
 

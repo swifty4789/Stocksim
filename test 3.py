@@ -19,13 +19,13 @@ SL =   {
     'DDN': 1000
 }
 
-
+import tkinter
 from tkinter import *
 
-   buyroot = tkinter.Tk()
-   buyroot.geometry("1000x800")
-   buyroot.title("Stocksim")
-   Label(buyroot, text="Purchase stuff", font=('Helvetica 17 bold')).pack(pady=20)
+buyroot = tkinter.Tk()
+buyroot.geometry("1000x800")
+buyroot.title("Stocksim")
+Label(buyroot, text="Purchase stuff", font=('Helvetica 17 bold')).pack(pady=20)
 
 def buy():# <---purchase function
     global balance
